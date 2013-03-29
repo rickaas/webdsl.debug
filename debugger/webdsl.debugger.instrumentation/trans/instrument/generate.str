@@ -1,0 +1,87 @@
+module instrumentation/generate
+
+imports
+//	include/WebDSL
+	lib/libwebdsl-front
+	
+imports
+	lib/libdsldi
+
+imports
+	instrument/statement-placeholder
+
+strategies
+	webdsl-post-instrumentation =
+		innermost(replace-debug-aterms)
+		; (add-debug-import <+ (<log-critical(|"Could not add debug import ")> ""; fail))
+
+// DebugEventCall are not generated, we directly generate WebDSL code
+//    replace-debug-aterms :
+//        DebugEventCall(name, exp*) -> ExprStatement(DebugSystemCall(name,exp*))
+
+// WebDSL does not support try-finally
+//    replace-debug-aterms :
+//        DebugTryFinally(try-stats*, finally-stats*) -> TryFinally(try-stats*, finally-stats*)
+        
+    // When the current term is a list and it contains DebugStep term, the DebugStep is flattened in place.
+    // E.g. [Foo, DebugStep(Event, Stat), Bar] becomes [Foo, Event, Stat, Bar]
+    // split-fetch-keep returns a triple.
+    // First element is the head of the list, second element is the DebugStep(event, statement), third element is the tail
+    //ffsasasdf = split-fetch-keep(?DebugStep(event, statement)); ?(head-list, _, tail-list); <conc> (head-list, [event,statement], tail-list)
+    replace-debug-aterms = is-list;
+        split-fetch-keep(?DebugStep(event, statement)); ?(head-list, _, tail-list); <conc> (head-list, [event,statement], tail-list)
+        
+        // Define([AjaxTemplate],"showWikiText"
+        // ,[Arg("t",SimpleSort("String"))]
+        // ,None,
+        //  [
+        //   Action([],"edit",[],Block(
+        //     [
+        //      AjaxStatement(
+        //          AjaxReplace(
+        //            Add(String("showText"),Var("t"))
+        //            ,DebugStep(
+        //                TemplateCallNoBody("debug_template_step",[..])
+        //                ,TemplateCallNoBody("editWikiText",[Var("t"),Var("text")])
+        //              )
+        //          )
+        //        )
+        //     ]))
+        // ,TemplateCallBody("blockquote",TemplateBody([]))])
+        
+    // replace(target, templatecall);
+    // The the templatecall is a DebugStep(debug-event-call, templatecall')
+    replace-debug-aterms :
+    	AjaxReplace(target, DebugStep(debug-event-call, templatecall')) -> AjaxReplace(target, templatecall')
+    	// PlaceholderWithAjaxCall("releases",DebugStep(TemplateCallNoBody("debug_template_step"),TemplateCallNoBody("roadmapRelease",[Call()]))
+    replace-debug-aterms :
+    	AjaxAppend(target, DebugStep(debug-event-call, templatecall')) -> AjaxAppend(target, templatecall')
+    replace-debug-aterms :
+    	AjaxRelocate(DebugStep(debug-event-call, pagecall')) -> AjaxRelocate(pagecall')
+    replace-debug-aterms :
+    	PlaceholderWithAjaxCall(target, DebugStep(debug-event-call, templatecall')) -> PlaceholderWithAjaxCall(target, templatecall')
+    replace-debug-aterms :
+    	RequestScopeTemplate(DebugStep(debug-event-call, vardecl')) -> RequestScopeTemplate(vardecl')
+    	
+    replace-debug-aterms :
+        DebugTryFinally(block, exit-event) ->
+        TryFinallyStatement(block, [], Finally(Block([exit-event])))
+        
+	add-debug-import :
+		ApplicationDefs(name, defs*, t) -> ApplicationDefs(name, defs'*, t)
+		where
+			debug-lib-import := Imports("webdsldebuglib/debugevents")
+			; defs'* := <conc> ([debug-lib-import], defs*)
+			  
+	add-debug-import :
+		ModuleDefs(name, defs*, t) -> ModuleDefs(name, defs'*, t)
+		where
+			debug-lib-import := Imports("webdsldebuglib/debugevents")
+			; defs'* := <conc> ([debug-lib-import], defs*)
+	
+	// ac.app from yellowgrass project is parsed as Module("ac", [...])
+	add-debug-import :
+		Module(name, defs*) -> Module(name, defs'*)
+		where
+			debug-lib-import := Imports("webdsldebuglib/debugevents")
+			; defs'* := <conc> ([debug-lib-import], defs*)

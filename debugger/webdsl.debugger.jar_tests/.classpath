@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/instrumentation/strategoxt.jar"/>
+	<classpathentry kind="lib" path="lib/instrumentation/dsldi-java.jar"/>
+	<classpathentry kind="lib" path="lib/instrumentation/libdsldi.jar"/>
+	<classpathentry kind="lib" path="lib/webdsl/webdsl.jar"/>
+	<classpathentry kind="lib" path="lib/webdsl/acoda.jar"/>
+	<classpathentry kind="lib" path="lib/webdsl/webdsl-di.jar" sourcepath="lib/webdsl/webdsl-di-source.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,66 @@
+module instrument/init
+
+imports
+  libstratego-lib
+  libstratego-sglr
+  libstratego-gpp
+
+imports
+//	include/WebDSL
+	lib/libwebdsl-front
+
+imports
+	lib/libdsldi
+	
+imports
+	instrument/-
+	
+strategies
+	
+	init-config =
+		<log-info(|"Initializing WebDSL debug instrumentation...")> ""
+		
+		// extract-step-info
+		; ext-register-extract-strategy(extract-step-info|"extract-step-info")
+		// extract-function-info
+		; ext-register-extract-strategy(extract-function-info|"extract-function-info")
+		// extract-template-info
+		; ext-register-extract-strategy(extract-template-info|"extract-template-info")
+		  
+		// gen-function-step
+		; ext-register-gen-strategy(gen-function-step|"gen-function-step")
+		// gen-function-enter
+		; ext-register-gen-strategy(gen-function-enter|"gen-function-enter")
+		// gen-function-exit
+		; ext-register-gen-strategy(gen-function-exit|"gen-function-exit")
+
+
+		// gen-template-step
+		; ext-register-gen-strategy(gen-template-step|"gen-template-step")
+		// gen-template-enter
+		; ext-register-gen-strategy(gen-template-enter|"gen-template-enter")
+		// gen-template-exit
+		; ext-register-gen-strategy(gen-template-exit|"gen-template-exit")
+		
+        ; <SET-LANGUAGE-ID> "Webdsl"
+        ; <SET-POST-INSTRUMENTATION-NAME> "webdsl-post-instrumentation"
+        ; <add-dsl-specific-write-file> ("Webdsl", "write-webdsl-as-dsl")
+        ; <add-dsl-specific-parse-file> ("Webdsl", "parse-webdsl-file")
+        //; <add-dsl-specific-parse-file> ("Webdsl", "parse-webdsl-as-dsl")
+        ; <log-info(|"Initializing WebDSL debug instrumentation complete")> ""
+          
+	override filter-dirs = 
+		?paths*
+		//; log-vomit(|"Override filter-dirs ")
+		; filter(not(is-hidden-file))
+		; proceed
+	
+	is-hidden-file :
+		filename -> filename
+		where
+			<base-filename; string-starts-with(|".")> filename
+		// filter-dirs :
+		// paths* -> dirs*
+		// with
+		//  dirs* := <filter(file-exists ; filemode ; isdir)> paths*
+		 

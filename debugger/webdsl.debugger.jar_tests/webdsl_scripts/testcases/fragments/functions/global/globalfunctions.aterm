@@ -1,0 +1,153 @@
+ApplicationDefs(
+  "globalfunctions"
+, [ FunctionNoReturn(
+      "resetSchedule"
+    , []
+    , Block(
+        [ VarDeclInitInferred("hourCounter", Int("0"))
+        , VarDeclInitInferred("intervalInHours", Int("12"))
+        , VarDeclInitInferred("count", Add(Var("hourCounter"), Var("intervalInHours")))
+        , Stat(ThisCall("validateEmail", [String("\"foo@bar.com\"")]))
+        ]
+      )
+    )
+  , Function(
+      "validateEmail"
+    , [Arg("mail", SimpleSort("String"))]
+    , SimpleSort("Bool")
+    , Block(
+        [ Return(
+            Call(
+              RegexPattern(
+                SingleBranch(
+                  Pieces(
+                    [ QuantifiedAtom(
+                        Capture(
+                          SingleBranch(
+                            Pieces(
+                              [ SingleAtom(
+                                  CharacterClass(
+                                    BracketList(
+                                      [ Range("a", "z")
+                                      , Range("A", "Z")
+                                      , Range("0", "9")
+                                      , BracketLiteral("_")
+                                      , BracketCharacter(Quoted("-"))
+                                      , BracketCharacter(Quoted("."))
+                                      ]
+                                    )
+                                  )
+                                )
+                              ]
+                            )
+                          )
+                        )
+                      , GreedyOneOrMore()
+                      )
+                    , SingleAtom(AtomLiteral("@"))
+                    , SingleAtom(
+                        Capture(
+                          TupleBranch(
+                            SingleBranch(
+                              Pieces(
+                                [ SingleAtom(
+                                    Capture(
+                                      SingleBranch(
+                                        Pieces(
+                                          [ QuantifiedAtom(
+                                              CharacterClass(BracketList([Range("0", "9")]))
+                                            , GreedyLowerUpperBound("1", "3")
+                                            )
+                                          , SingleAtom(AtomCharacter(Quoted(".")))
+                                          , QuantifiedAtom(
+                                              CharacterClass(BracketList([Range("0", "9")]))
+                                            , GreedyLowerUpperBound("1", "3")
+                                            )
+                                          , SingleAtom(AtomCharacter(Quoted(".")))
+                                          , QuantifiedAtom(
+                                              CharacterClass(BracketList([Range("0", "9")]))
+                                            , GreedyLowerUpperBound("1", "3")
+                                            )
+                                          , SingleAtom(AtomCharacter(Quoted(".")))
+                                          , QuantifiedAtom(
+                                              CharacterClass(BracketList([Range("0", "9")]))
+                                            , GreedyLowerUpperBound("1", "3")
+                                            )
+                                          ]
+                                        )
+                                      )
+                                    )
+                                  )
+                                ]
+                              )
+                            )
+                          , SingleBranch(
+                              Pieces(
+                                [ SingleAtom(
+                                    Capture(
+                                      SingleBranch(
+                                        Pieces(
+                                          [ QuantifiedAtom(
+                                              Capture(
+                                                SingleBranch(
+                                                  Pieces(
+                                                    [ QuantifiedAtom(
+                                                        CharacterClass(
+                                                          BracketList(
+                                                            [ Range("a", "z")
+                                                            , Range("A", "Z")
+                                                            , Range("0", "9")
+                                                            , BracketCharacter(Quoted("-"))
+                                                            ]
+                                                          )
+                                                        )
+                                                      , GreedyOneOrMore()
+                                                      )
+                                                    , SingleAtom(AtomCharacter(Quoted(".")))
+                                                    ]
+                                                  )
+                                                )
+                                              )
+                                            , GreedyOneOrMore()
+                                            )
+                                          ]
+                                        )
+                                      )
+                                    )
+                                  )
+                                , SingleAtom(
+                                    Capture(
+                                      SingleBranch(
+                                        Pieces(
+                                          [ QuantifiedAtom(
+                                              CharacterClass(
+                                                BracketList([Range("a", "z"), Range("A", "Z")])
+                                              )
+                                            , GreedyLowerUpperBound("2", "4")
+                                            )
+                                          ]
+                                        )
+                                      )
+                                    )
+                                  )
+                                ]
+                              )
+                            )
+                          )
+                        )
+                      )
+                    ]
+                  )
+                )
+              )
+            , "match"
+            , [Var("mail")]
+            )
+          )
+        ]
+      )
+    )
+  , Define([Page()], "root", [], None(), [])
+  ]
+, []
+)

@@ -1,0 +1,35 @@
+module basic-pp
+
+language WebDSL
+
+test pp make users
+	debug(!"pp make users")
+//                /home/rlindeman/Applications/development/eclipse/spoofax-installs/webdsl-plugin-dev/workspace/webdsl.debugger.jar_tests
+	; ![ "/home/rlindeman/Applications/development/eclipse/spoofax-installs/webdsl-plugin-dev/workspace/webdsl.debugger.jar_tests"
+	     ,
+	     "/webdsl_scripts/testcases/programs/performance01/make-users.app"
+	  ]
+	; concat-strings
+	; debug(!"location ") 
+//	; read-text-file
+//	; debug
+	; parse-webdsl-file
+	; debug
+	; pp-webdsl-to-string
+	; debug
+	  
+test pp function only
+	debug(!"pp function only")
+//                /home/rlindeman/Applications/development/eclipse/spoofax-installs/webdsl-plugin-dev/workspace/webdsl.debugger.jar_tests
+	; ![ "/home/rlindeman/Applications/development/eclipse/spoofax-installs/webdsl-plugin-dev/workspace/webdsl.debugger.jar_tests"
+	     ,
+	     "/webdsl_scripts/testcases/fragments/pp-examples/functiononly.app"
+	  ]
+	; concat-strings
+	; debug(!"location ") 
+	//; read-text-file
+	//; debug
+	; parse-webdsl-file
+	; debug
+	; pp-webdsl-to-string
+	; debug

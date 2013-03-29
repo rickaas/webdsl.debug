@@ -1,0 +1,82 @@
+ApplicationDefs(
+  "entityfunctions"
+, [ EntityNoSuper(
+      "RepoSearchManager"
+    , [ Property(
+          "newWeekMoment"
+        , Simple()
+        , SimpleSort("Date")
+        , [DefaultAnno(ThisCall("now", []))]
+        )
+      , Property(
+          "hourCounter"
+        , Simple()
+        , SimpleSort("Int")
+        , [DefaultAnno(Int("0"))]
+        )
+      , Property(
+          "intervalInHours"
+        , Simple()
+        , SimpleSort("Int")
+        , [DefaultAnno(Int("11"))]
+        )
+      , PropertyNoAnno("nextInvocation", Simple(), SimpleSort("DateTime"))
+      , FunctionNoReturn(
+          "newHour"
+        , []
+        , Block(
+            [ Stat(ThisCall("tryNewWeek", []))
+            , VarDeclInitInferred("execute", False())
+            , Stat(
+                Assignment(Var("hourCounter"), Add(Var("hourCounter"), Int("1")))
+              )
+            , IfNoElse(
+                LargerThanOrEqual(Var("hourCounter"), Var("intervalInHours"))
+              , Block(
+                  [ Stat(Assignment(Var("hourCounter"), Int("0")))
+                  , Stat(Assignment(Var("execute"), True()))
+                  ]
+                )
+              )
+            ]
+          )
+        )
+      , Function(
+          "shiftByHours"
+        , [Arg("hours", SimpleSort("Int"))]
+        , SimpleSort("Int")
+        , Block(
+            [ Stat(
+                Assignment(Var("hourCounter"), Sub(Var("hourCounter"), Var("hours")))
+              )
+            , Stat(
+                Assignment(
+                  Var("nextInvocation")
+                , Call(Var("nextInvocation"), "addHours", [Var("hours")])
+                )
+              )
+            , Return(Int("5"))
+            ]
+          )
+        )
+      , FunctionNoReturn(
+          "tryNewWeek"
+        , []
+        , Block(
+            [ IfNoElse(
+                Call(
+                  Call(Var("newWeekMoment"), "addDays", [Int("7")])
+                , "before"
+                , [ThisCall("now", [])]
+                )
+              , Block([])
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , Define([Page()], "root", [], None(), [])
+  ]
+, []
+)

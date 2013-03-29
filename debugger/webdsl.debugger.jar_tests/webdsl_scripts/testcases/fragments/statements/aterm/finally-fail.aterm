@@ -1,0 +1,25 @@
+TryFinallyStatement(
+	Block(
+		[
+			If(LargerThan(Var("x0"{OriginalNameAnno("x")}){TypeAnno(SimpleSort("Int"){DefValueAnno(Int("0")),ImmutableReference})},Var("y0"{OriginalNameAnno("y")}){TypeAnno(SimpleSort("Int"){DefValueAnno(Int("0")),ImmutableReference})}){TypeAnno(SimpleSort("Bool"){DefValueAnno(False)})}
+				,Block([VarDeclInit("s0"{OriginalNameAnno("s")},SimpleSort("Int"){DefValueAnno(Int("0")),[]},ThisCall("sum"{NewFunctionNameAnno("sumInt__Int"),"doStuff_sum0"},[Var("x0"{OriginalNameAnno("x")}){TypeAnno(SimpleSort("Int"){DefValueAnno(Int("0")),ImmutableReference})},Var("y0"{OriginalNameAnno("y")}){TypeAnno(SimpleSort("Int"){DefValueAnno(Int("0")),ImmutableReference})}]){GlobalCallAnno([SimpleSort("Int"),SimpleSort("Int")]),TypeAnno(SimpleSort("Int"){DefValueAnno(Int("0"))})}),Return(Var("s0"{OriginalNameAnno("s")}){TypeAnno(SimpleSort("Int"){DefValueAnno(Int("0")),[]})})])
+				,Block([Return(Int("-1"){TypeAnno(SimpleSort("Int"){DefValueAnno(Int("0"))})})])
+			)
+		]
+	)
+	,[]
+	,Finally(
+		Block(
+			[
+				Stat(
+					Call(
+						GlobalVar("callCount"){TypeAnno(SimpleSort("CallCount"){EntityAnno("id",None,False),DefValueAnno(Null)})}
+						,"inc"{NewFunctionNameAnno("inc"),"doStuff_inc0"},[]
+					){TypeAnno(SimpleSort("Void"))}
+				)
+			]
+		)
+	)
+)
+
+

@@ -1,0 +1,4 @@
+instrumentation 
+
+event enter at Function._ creates gen-function-enter from extract-function-info
+event enter at FunctionNoReturn._ creates gen-function-enter from extract-function-info

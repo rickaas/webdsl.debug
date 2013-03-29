@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="webdsl.debugger.instrumentation" default="release" basedir=".">
+
+	<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+	
+	<property name="strmodule-name" value="webdsl-instrumentation"/>
+	<property name="jar.name" value="webdsl-di"/>
+	
+	<property name="str-src.dir" value="trans"/>
+	<property name="str-lib.dir" value="lib"/>
+	<property name="str-include.dir" value="include"/>
+	<property name="build.dir" value="build"/>
+	
+	<property name="java-wrapper-src.dir" value="src" />
+	
+	<property name="java-src.gen.dir" value="${build.dir}/java-gen"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.dir" value="${build.dir}/jar"/>
+	
+	<property name="package-root-name" value="webdsl.debuggers.instrumentation"/>
+	<property name="package-root-dir" value="webdsl/debuggers/instrumentation"/>
+	
+	<!-- WebDSL tryfinally compiler -->
+	<loadproperties srcFile="import.webdsl.tryfinally.properties" />
+	
+	<path id="strategoxt.jar.libraryclasspath">
+	    <pathelement location="utils/strategoxt.jar"/>
+	</path>
+	
+	<path id="compile-java.classpath">
+		<pathelement location="utils/dsldi-java.jar"/>
+		<pathelement location="utils/dsldi.jar"/>
+		<pathelement location="utils/libdsldi.jar"/>
+		<pathelement location="utils/strategoxt.jar"/>
+		<pathelement location="utils/webdsl/webdsl.jar"/>
+		<pathelement location="utils/webdsl/webdsl_editor.jar"/>
+	</path>
+	
+    <property name="build.stratego.args" value="
+                    -I &quot;${basedir}/${str-src.dir}&quot;
+                    -I &quot;${basedir}&quot;
+                    -la stratego-lib 
+                    -la stratego-sglr 
+                    -la stratego-gpp 
+                    -la stratego-xtc 
+                    -la stratego-aterm"/>
+
+	
+    <!-- Stratego to Java compiler -->
+    <target name="generate-java">
+    	<echo message="Generating Java from Stratego" />
+        <antcall target="stratego.jvm.helper">
+            <param name="build.stratego.outputfile" value="${java-src.gen.dir}/${package-root-dir}/Main.java"/>
+        	<!-- do "-la trans" to include packages from stratego_sugar.jar, unfortunatly this fails because Main is in both java-jars.... -->
+        	<!-- org.webdsl.webdsl_front is in webdsl.jar -->
+            <param name="build.stratego.extraargs" value="-la java-front -la org.strategoxt.imp.debug.instrumentation.trans -la org.webdsl.webdsl_front"/>
+        	<!--<param name="build.stratego.extraargs" value="-la java-front -la org.strategoxt.strc"/>-->
+        </antcall>
+    </target>
+	
+	<!-- Compile stratego code to java helper target-->
+    <target name="stratego.jvm.helper">
+    	<mkdir dir="${basedir}/${java-src.gen.dir}/${package-root-dir}"/>
+        <java classname="org.strategoxt.strj.Main" failonerror="true">
+        	<classpath refid="strategoxt.jar.libraryclasspath" />
+            <arg value="-i"/>
+            <arg value="${basedir}/${str-src.dir}/${strmodule-name}.str"/>
+            <arg value="-o"/>
+        	<arg value="${basedir}/${build.stratego.outputfile}"/>
+        	<!-- argument p is used to specify the name of the java package -->
+            <arg value="-p"/>
+            <arg value="${package-root-name}"/>
+            <arg value="--library"/>
+            <arg value="--clean"/>
+            <arg line="${build.stratego.args}"/>
+            <arg line="${build.stratego.extraargs}"/>
+<!--            <arg line="${externaljarflags}"/>-->
+<!--            <arg line="${externaldefimport}"/>-->
+            <arg line="-I &quot;${basedir}/${str-lib.dir}&quot; -I &quot;${basedir}/${str-include.dir}&quot; --cache-dir &quot;${basedir}/.cache&quot;"/>
+        </java>
+    </target>
+	
+	<!-- Compile java -->
+	<target name="compile-java" depends="generate-java">
+    	<echo message="Compiling Java" />
+    	<mkdir dir="${classes.dir}"/>
+        <javac destdir="${classes.dir}" source="1.5" target="1.5" debug="on">
+        	<src path="${java-src.gen.dir}" />
+<!--        	<src path="${java-wrapper-src.dir}"/> -->
+        	<classpath refid="compile-java.classpath" />
+        	<classpath path="${java-src.gen.dir}" />
+    	</javac>
+        <!-- copy imported terms -->
+        <copy todir="${classes.dir}">
+            <fileset dir="${java-src.gen.dir}" excludes="**/*.java"/>
+        </copy>
+	</target>
+	
+	<!-- make jar -->
+    <target name="jar" depends="compile-java">
+        <echo message="Making jars..."/>
+    	<mkdir dir="${jar.dir}"/>
+        <jar basedir="${classes.dir}" destfile="${jar.dir}/${jar.name}.tmp.jar"/>
+        <move file="${jar.dir}/${jar.name}.tmp.jar" tofile="${jar.dir}/${jar.name}.jar"/>
+    </target>
+
+	<!-- make jar with source -->
+    <target name="jar-source">
+        <jar destfile="${jar.dir}/${jar.name}-source.tmp.jar">
+            <fileset dir="${java-src.gen.dir}">
+            </fileset>
+            <!--<fileset dir="${java-wrapper-src.dir}"></fileset>-->
+        </jar>
+        <move file="${jar.dir}/${jar.name}-source.tmp.jar" tofile="${jar.dir}/${jar.name}-source.jar" />
+    </target>
+	
+	
+    <target name="clean">
+    	<!-- clean generated java -->
+    	<echo message="removing ${java-src.gen.dir}" />
+        <delete failonerror="false">
+            <fileset dir="${java-src.gen.dir}" />
+        </delete>
+    	<!-- clean class files -->
+    	<echo message="removing ${classes.dir}" />
+        <delete failonerror="false">
+            <fileset dir="${classes.dir}" />
+        </delete>
+    </target>
+	
+	<target name="update-webdsl-jars">
+		<!-- copy libwebdsl-front.rtree, webdsl.jar and webdsl_editor.jar -->
+		<copy file="${webdsl.home}/libwebdsl-front.rtree"
+			preservelastmodified="true" todir="lib" />
+		<copy file="${webdsl.installdir}/bin/webdsl.jar"
+			preservelastmodified="true" todir="utils/webdsl" />
+		<copy file="${webdsleditor.home}/include/webdsl_editor.jar"
+			preservelastmodified="true" todir="utils/webdsl" />
+	</target>
+	
+	<target name="update-dsldi">
+		<copy todir="utils" preservelastmodified="true">
+			<fileset dir="${dsldi.home}/dist" />
+		</copy>
+	</target>
+	
+    <target name="release" depends="clean, update-webdsl-jars, update-dsldi, jar, jar-source" />
+</project>

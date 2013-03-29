@@ -1,0 +1,118 @@
+module instrumentation/generate-function
+
+imports
+  libstratego-lib
+  libstratego-sglr
+  libstratego-gpp
+
+imports
+//	include/WebDSL
+	lib/libwebdsl-front
+
+imports
+	lib/libdsldi
+
+imports
+	instrument/statement-placeholder
+	
+strategies
+	
+	// Global as well as entity functions
+	gen-function-enter :
+		function-def -> instrumented-function-def
+		where
+			(debug-information := <GET-CURRENT-DEBUG-INFORMATION> <+ log-critical(|"Failed to get debug information"))
+			; ?(filename, a, b, c, d, f-name)
+			; program-filename := $[[filename]]
+			; location := $[[a],[b],[c],[d]]
+			; functionName := $[[f-name]]
+			; enter-event := <create-function-enter-call(|program-filename, functionName, location)>
+			; instrumented-function-def := <insert-enter-event(|enter-event)> function-def
+
+	insert-enter-event(|enter-event) :
+		Function(f-name, args*, r-type, body) -> Function(f-name, args*, r-type, body')
+		where
+			body' := <insert-enter-in-block(|enter-event)> body
+//	insert-enter-event(|enter-event) :
+//		FunctionNoReturn(f-name, args*, body) -> FunctionNoReturn(f-name, args*, body')
+//		where
+//			body' := <insert-enter-in-block(|enter-event)> body
+
+// StaticEntityFunction
+// FunctionExp
+	insert-enter-in-block(|enter-event) :
+		Block(stat*) -> Block(stat'*)
+		with
+			stat'* := [enter-event | stat* ]
+
+	
+strategies
+	gen-function-exit:
+		function-def -> instrumented-function-def
+		where
+			debug-information := <GET-CURRENT-DEBUG-INFORMATION>
+			; ?(filename, a, b, c, d, f-name)
+			; program-filename := $[[filename]]
+			; location := $[[a],[b],[c],[d]]
+			; functionName := $[[f-name]]
+			; exit-event := <create-exit-event(|program-filename, functionName, location)>
+			; instrumented-function-def := <insert-exit-event(|exit-event)> function-def
+	
+	insert-exit-event(|exit-event) :
+		Function(f-name, args*, r-type, body) -> Function(f-name, args*, r-type, body')
+		where
+			body' := <insert-exit-in-block(|exit-event)> body
+//	insert-exit-event(|exit-event) :
+//		FunctionNoReturn(f-name, args*, body) -> FunctionNoReturn(f-name, args*, body')
+//		where
+//			body' := <insert-exit-in-block(|exit-event)> body
+
+	// put the body of the function inside the try-block and put the exit-event in the finally block
+	insert-exit-in-block(|exit-event) :
+		// ******
+		// Block(stat*) -> Block(stat'*)
+		// with
+		// 	if (!stat*; length; equal(|1)) then
+		// 		![stat*, exit-event]
+		// 	else
+		// 		<conc> (stat*, [exit-event])
+		// 	end
+		// 	; ?stat'*
+		// ******
+		//block -> TryFinallyStatement(block, [], f)
+		//where
+		//	f := Finally(Block(exit-event))
+		// ******
+		block -> Block([DebugTryFinally(block, exit-event)])
+		
+
+strategies
+	
+	gen-function-step :
+		s -> instrumented-s
+		where
+			debug-information := <GET-CURRENT-DEBUG-INFORMATION>
+			; ?(filename, a, b, c, d)
+			; program-filename := $[[filename]]
+			; location := $[[a],[b],[c],[d]]
+			; step-event := <create-step-event(|program-filename, location)>
+			//; step-event := DebugEventCall("step", args)
+			//; instrumented-function-def := <insert-exit-event(|step-event)> function-def
+            ; instrumented-s := DebugStep(step-event, s)
+strategies
+
+	// WebDSLDebugEvents.functionEnter("make-users.app", "14,0,21,0", "generateUsers");
+	create-function-enter-call(|program-filename, functionName, location) = 
+		args* := [String(program-filename), String(location), String(functionName)]
+		; !Stat(Call(Var("WebDSLDebugEvents"), "functionEnter", args*))
+
+		  
+	create-exit-event(|program-filename, functionName, location) = 
+		args* := [String(program-filename), String(location), String(functionName)]
+		; !Stat(Call(Var("WebDSLDebugEvents"), "functionExit", args*))
+		  
+	// statementStep(filename : String, location : String)
+	create-step-event(|program-filename, location) = 
+		args* := [String(program-filename), String(location)]
+		; !Stat(Call(Var("WebDSLDebugEvents"), "statementStep", args*))
+

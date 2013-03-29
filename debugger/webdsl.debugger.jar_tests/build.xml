@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="webdsl.debugger.jar_tests" default="update-jars" basedir=".">
+	
+	<property name="webdsl-di.project" location="../webdsl.debugger.instrumentation"/>
+	
+	<property name="lib.webdsl.dir" location="lib/webdsl" />
+	<property name="lib.dsldi.dir" location="lib/instrumentation" />
+	
+	<!-- WebDSL tryfinally compiler -->
+	<loadproperties srcFile="import.webdsl.tryfinally.properties" />
+		
+	<target name="copy-webdsl-di-jars">
+        <mkdir dir="${lib.webdsl.dir}"/>
+        <copy file="${webdsl-di.project}/build/jar/webdsl-di.jar" todir="${lib.webdsl.dir}" failonerror="false"/>
+		<copy file="${webdsl-di.project}/build/jar/webdsl-di-source.jar" todir="${lib.webdsl.dir}" failonerror="false"/>
+	</target>
+	
+	<target name="build-webdsl-di-jars">
+		<ant antfile="${webdsl-di.project}/build.main.xml" target="release" dir="${webdsl-di.project}"/> 
+	</target>
+	
+	<target name="update-webdsl-jars" depends="build-webdsl-di-jars,copy-webdsl-di-jars">
+		<description>Get all the required jars from the webdsl.debugger.instrumentation project</description>
+	</target>
+
+	<target name="copy-webdsl-jars">
+		<mkdir dir="${lib.webdsl.dir}"/>
+		<copy file="${webdsl.installdir}/bin/webdsl.jar"
+			preservelastmodified="true" todir="${lib.webdsl.dir}" />
+		<copy file="${webdsleditor.home}/include/webdsl_editor.jar"
+			preservelastmodified="true" todir="${lib.webdsl.dir}" />
+	</target>
+	
+	<target name="update-dsldi">
+		<copy todir="${lib.dsldi.dir}" preservelastmodified="true">
+			<fileset dir="${dsldi.home}/dist" />
+		</copy>
+	</target>
+	
+	<target name="update-jars" depends="update-webdsl-jars, copy-webdsl-jars, update-dsldi"/>
+	
+</project>

@@ -1,0 +1,81 @@
+ModuleDefs(
+  "make-users"
+, [ Define(
+      [Page()]
+    , "makeTestSet"
+    , []
+    , None()
+    , [ TemplateCallBody(
+          "form"
+        , TemplateBody(
+            [ Text("Make a test set")
+            , SubmitElem(
+                InlineAction(Block([Stat(ThisCall("generateUsers", []))]))
+              , []
+              , [Text("Execute")]
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , Function(
+      "generateUsers"
+    , []
+    , SimpleSort("Void")
+    , Block(
+        [ ForCountStmt(
+            "count"
+          , Int("1")
+          , Int("20")
+          , Block(
+              [ ForCountStmt(
+                  "id"
+                , Int("0")
+                , Int("100")
+                , Block(
+                    [ VarDeclInitInferred(
+                        "u"
+                      , ObjectCreation(
+                          SimpleSort("User")
+                        , [ ObjectPropertyAssignment("username", Add(String("MyName"), Var("id")))
+                          , ObjectPropertyAssignment("city", Add(String("Fake"), Var("id")))
+                          , ObjectPropertyAssignment("dob", Add(String("Unkown"), Var("id")))
+                          ]
+                        )
+                      )
+                    , Stat(Call(Var("u"), "save", []))
+                    ]
+                  )
+                )
+              ]
+            )
+          )
+        ]
+      )
+    )
+  , Define(
+      [Page()]
+    , "automaticallyMakeTestSet"
+    , []
+    , None()
+    , [TemplateCallNoBody("templateGenerateTestSet", [])]
+    )
+  , Define(
+      []
+    , "templateGenerateTestSet"
+    , []
+    , None()
+    , [VarDeclInitInferred("s", ThisCall("generateTestSet", []))]
+    )
+  , Function(
+      "generateTestSet"
+    , []
+    , SimpleSort("String")
+    , Block(
+        [Stat(ThisCall("generateUsers", [])), Return(String(""))]
+      )
+    )
+  ]
+, []
+)

@@ -1,0 +1,34 @@
+Module(
+  "finallyblock"
+, [ Section(
+      "definitions"
+    , [ Function(
+          "resetSchedule"
+        , []
+        , SimpleSort("Void")
+        , Block(
+            [ TryFinallyStatement(
+                Block(
+                  [ VarDeclGeneric("hourCounter"{"resetSchedule_hourCounter0"}, None(), Int("0"))
+                  , VarDeclGeneric("intervalInHours"{"resetSchedule_intervalInHours0"}, None(), Int("12"))
+                  , VarDeclGeneric("count"{"resetSchedule_count0"}, None(), Add(Var("hourCounter"{"resetSchedule_hourCounter0"}), Var("intervalInHours"{"resetSchedule_intervalInHours0"})))
+                  ]
+                )
+              , []
+              , Finally(
+                  Block([Stat(ThisCall("validateEmail"{"resetSchedule_validateEmail0"}, [String("foo@bar.com")]))])
+                )
+              )
+            ]
+          )
+        )
+      , Function(
+          "validateEmail"
+        , [Arg("mail"{"validateEmail_mail0"}, SimpleSort("String"))]
+        , SimpleSort("Bool")
+        , Block([Return(False())])
+        )
+      ]
+    )
+  ]
+)

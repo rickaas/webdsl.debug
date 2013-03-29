@@ -1,0 +1,7 @@
+instrumentation 
+
+event exit at Function._ creates gen-function-exit from extract-function-info
+event exit at FunctionNoReturn._ creates gen-function-exit from extract-function-info
+
+event enter at Function._ creates gen-function-enter from extract-function-info
+event enter at FunctionNoReturn._ creates gen-function-enter from extract-function-info

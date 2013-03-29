@@ -1,0 +1,11 @@
+ApplicationDefs(
+  "AnotherHelloWorld"
+, [Define(
+     [Page()]
+   , "root"
+   , []
+   , None()
+   , [Text("\"Hello world\"")]
+   )]
+, []
+)

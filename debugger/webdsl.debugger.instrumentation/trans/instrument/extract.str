@@ -1,0 +1,65 @@
+module instrument/extract
+
+imports
+	lib/libdsldi
+
+imports
+//	include/WebDSL
+	lib/libwebdsl-front
+		
+imports
+	instrument/util
+
+strategies
+    extract-function-info:
+        f -> debug-information
+        where
+	        get-a-b-c-d ; ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
+	        ; filename := <GET-DSL-PROGRAM-FILENAME>
+	        ; f-name := <get-function-name> f
+	        ; debug-information := (filename, a, b, c, d, f-name)
+
+    extract-template-info:
+        t -> debug-information
+        where
+	        get-a-b-c-d ; ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
+	        ; filename := <GET-DSL-PROGRAM-FILENAME>
+	        ; f-name := <get-template-name> t
+	        ; debug-information := (filename, a, b, c, d, f-name)
+
+    extract-step-info:
+        f -> debug-information
+        where
+            get-a-b-c-d ; ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
+            ; filename := <GET-DSL-PROGRAM-FILENAME>
+            ; debug-information := (filename, a, b, c, d)
+              
+// get the name of the functions
+strategies
+    // "function" Id "(" {FormalArg ","}* ")" ":" Sort
+    //     Block                                            
+    //     -> Function {cons("Function")}
+	get-function-name :
+		Function(name, _, _, _) -> name
+
+    // removed from WebDSL in rev4860
+    // "function" Id "(" {FormalArg ","}* ")" 
+    //     Block                                            
+    //     -> FunctionNoReturn {cons("FunctionNoReturn")}
+    //get-function-name :
+    //	FunctionNoReturn(name, _, _) -> name
+
+// StaticEntityFunction
+// FunctionExp
+
+// get the name of the templates
+strategies
+	// TemplateDefinition 
+	get-template-name :
+		Define(_, t-name, _, _, _) -> t-name
+	get-template-name :
+		DefineTemplate(_, t-name, _, _, _) -> t-name
+	get-template-name :
+		DefinePage(_, t-name, _, _, _) -> t-name
+		
+		

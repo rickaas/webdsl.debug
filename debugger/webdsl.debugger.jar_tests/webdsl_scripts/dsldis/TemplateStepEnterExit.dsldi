@@ -1,0 +1,23 @@
+instrumentation 
+
+event step at TemplateElement._ creates gen-template-step from extract-step-info
+event step at TemplateCall._ creates gen-template-step from extract-step-info
+
+// The sorts below all resolve to TemplateCall, see if we can get the parent sort of a child sort.
+// TemplateCallNoArgs -> TemplateCall
+event step at TemplateCallNoArgs._ creates gen-template-step from extract-step-info
+event step at TemplateCallNoBody._ creates gen-template-step from extract-step-info
+event step at TemplateCallNoAssigns._ creates gen-template-step from extract-step-info
+event step at TemplateCallPropsNoBody._ creates gen-template-step from extract-step-info
+event step at TemplateCallProps._ creates gen-template-step from extract-step-info
+event step at TemplateCallPropsNoArgs._ creates gen-template-step from extract-step-info
+event step at TemplateCallBody._ creates gen-template-step from extract-step-info
+
+// VarDecl -> TemplateElement
+event step at VarDecl._ creates gen-template-step from extract-step-info
+// next pattern will also match var declarations inside action code
+// event step at VarDeclStat._ creates gen-template-step from extract-step-info
+
+event exit at TemplateDefinition._ creates gen-template-exit from extract-template-info
+
+event enter at TemplateDefinition._ creates gen-template-enter from extract-template-info

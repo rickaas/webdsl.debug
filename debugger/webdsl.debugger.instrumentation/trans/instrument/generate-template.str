@@ -1,0 +1,120 @@
+module instrumentation/generate-template
+
+imports
+  libstratego-lib
+  libstratego-sglr
+  libstratego-gpp
+
+imports
+//	include/WebDSL
+	lib/libwebdsl-front
+
+imports
+	lib/libdsldi
+
+imports
+	instrument/statement-placeholder
+
+
+strategies
+	
+	// templates
+	gen-template-enter :
+		template-def -> instrumented-template-def
+		where
+			(debug-information := <GET-CURRENT-DEBUG-INFORMATION> <+ log-critical(|"Failed to get debug information"))
+			; ?(filename, a, b, c, d, t-name)
+			; program-filename := $[[filename]]
+			; location := $[[a],[b],[c],[d]]
+			; templateName := $[[t-name]]
+			; enter-event := <create-template-enter-call(|program-filename, templateName, location)>
+			; instrumented-template-def := <insert-template-enter-event(|enter-event)> template-def
+
+	insert-template-enter-event(|enter-event) :
+		Define(modifier, t-name, args*, t-args, body) -> Define(modifier, t-name, args*, t-args, body')
+		where
+			body' := <insert-template-enter-in-block(|enter-event)> body
+	insert-template-enter-event(|enter-event) :
+		DefineTemplate(modifier, t-name, args*, t-args, body) -> DefineTemplate(modifier, t-name, args*, t-args, body')
+		where
+			body' := <insert-template-enter-in-block(|enter-event)> body
+	insert-template-enter-event(|enter-event) :
+		DefinePage(modifier, t-name, args*, t-args, body) -> DefinePage(modifier, t-name, args*, t-args, body')
+		where
+			body' := <insert-template-enter-in-block(|enter-event)> body
+			
+// StaticEntityFunction
+// FunctionExp
+	insert-template-enter-in-block(|enter-event) :
+		//Block(stat*) -> Block(stat'*)
+		elements* -> elements'*
+		with
+			//stat'* := [enter-event | stat* ]
+			elements'* := [enter-event | elements* ]
+
+	
+strategies
+	gen-template-exit:
+		template-def -> instrumented-template-def
+		where
+			debug-information := <GET-CURRENT-DEBUG-INFORMATION>
+			; ?(filename, a, b, c, d, t-name)
+			; program-filename := $[[filename]]
+			; location := $[[a],[b],[c],[d]]
+			; templateName := $[[t-name]]
+			; exit-event := <create-template-exit-event(|program-filename, templateName, location)>
+			; instrumented-template-def := <insert-template-exit-event(|exit-event)> template-def
+	
+	insert-template-exit-event(|exit-event) :
+		Define(modifier, t-name, args*, t-args, body) -> Define(modifier, t-name, args*, t-args, body')
+		where
+			body' := <insert-template-exit-in-block(|exit-event)> body
+	insert-template-exit-event(|exit-event) :
+		DefineTemplate(modifier, t-name, args*, t-args, body) -> DefineTemplate(modifier, t-name, args*, t-args, body')
+		where
+			body' := <insert-template-exit-in-block(|exit-event)> body
+	insert-template-exit-event(|exit-event) :
+		DefinePage(modifier, t-name, args*, t-args, body) -> DefinePage(modifier, t-name, args*, t-args, body')
+		where
+			body' := <insert-template-exit-in-block(|exit-event)> body
+			
+	// put the body of the function inside the try-block and put the exit-event in the finally block
+	insert-template-exit-in-block(|exit-event) :
+		elements* -> elements'*
+		with
+			if (!elements*; length; equal(|1)) then
+				![elements*, exit-event]
+			else
+				<conc> (elements*, [exit-event])
+			end
+			; ?elements'*
+
+
+strategies
+	
+	gen-template-step :
+		s -> instrumented-s
+		where
+			debug-information := <GET-CURRENT-DEBUG-INFORMATION>
+			; ?(filename, a, b, c, d)
+			; program-filename := $[[filename]]
+			; location := $[[a],[b],[c],[d]]
+			; step-event := <create-template-step-event(|program-filename, location)>
+			//; step-event := DebugEventCall("step", args)
+			//; instrumented-function-def := <insert-exit-event(|step-event)> function-def
+            ; instrumented-s := DebugStep(step-event, s)
+strategies
+	
+	create-template-enter-call(|program-filename, templateName, location) = 
+		args* := [String(program-filename), String(location), String(templateName)]
+		; !TemplateCallNoBody("debug_template_enter", args*)
+
+		  
+	create-template-exit-event(|program-filename, templateName, location) = 
+		args* := [String(program-filename), String(location), String(templateName)]
+		; !TemplateCallNoBody("debug_template_exit", args*)
+		  
+	// define debug_template_step(filename : String, location : String) {}
+	create-template-step-event(|program-filename, location) = 
+		args* := [String(program-filename), String(location)]
+		; !TemplateCallNoBody("debug_template_step", args*)

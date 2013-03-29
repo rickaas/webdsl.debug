@@ -1,0 +1,26 @@
+.head {
+	float: left;
+}
+.login {
+	float: right;
+}
+
+.top-container {
+	clear: both;
+	background-color:mintcream;
+}
+
+.main-container {
+	clear:both
+}
+
+.view-event {
+	background-color: whitesmoke;
+}
+	
+.event-name {
+  font-size : 14pt;	
+}
+.event-description {
+	
+}

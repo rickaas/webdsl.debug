@@ -1,0 +1,43 @@
+module basic-parsing 
+
+language WebDSL
+/*
+  parse-file = parse-webdsl-file
+  parse-webdsl-file =
+    parse-file(
+      strsglr-perror, strsglr-report-parse-error
+    | <import-term(include/WebDSL.tbl)>
+    )
+
+  parse-string = parse-webdsl-string
+  parse-webdsl-string =
+    parse-string(
+      strsglr-report-parse-error
+    | <import-term(include/WebDSL.tbl)>
+    )
+*/
+
+test parse global functions script
+	debug(!"foo")
+	; basedir := "/home/rlindeman/Applications/development/eclipse/spoofax-installs/webdsl-plugin-dev/workspace/webdsl.debugger.jar_tests"
+	; debug(!"basedir ")
+	; filename := "/webdsl_scripts/testcases/fragments/functions/global/globalfunctions.app"
+	; debug(!"filename ") 
+	; location := <concat-strings> [basedir, filename]
+	; debug(!"location ") 
+	; <parse-webdsl-file> location // This is the parse strategy include in the WebDSL editor
+	//; <parse-webdsl-as-dsl> location // This is the parse strategy included in the WebDSL debug instrumentation
+// => "foo"
+// with string escaping
+ => ApplicationDefs("globalfunctions",[Function("resetSchedule",
+ [],SimpleSort("Void"),Block([
+ 	VarDeclInitInferred("hourCounter",Int("0")),VarDeclInitInferred("intervalInHours",Int("12")),
+ 	VarDeclInitInferred("count",Add(Var("hourCounter"),Var("intervalInHours"))),
+ 	Stat(ThisCall("validateEmail",[String("\"foo@bar.com\"")]))])),
+ 	Function("validateEmail",[Arg("mail",SimpleSort("String"))],SimpleSort("Bool"),Block([Return(False)])),
+ 	Define([Page],"root",[],None,[])],[])
+// without string escaping
+// => ApplicationDefs("globalfunctions",[Function("resetSchedule",[],SimpleSort("Void"),Block([VarDeclInitInferred("hourCounter",Int
+// ("0")),VarDeclInitInferred("intervalInHours",Int("12")),VarDeclInitInferred("count",Add(Var("hourCounter"),Var("intervalInHours"))),Stat(ThisCall("validateEmail",
+// [String("foo@bar.com")]))])),Function("validateEmail",[Arg("mail",SimpleSort("String"))],SimpleSort("Bool"),Block([Return(False)])),Define([Page],"root",[],None,
+// [])],[])

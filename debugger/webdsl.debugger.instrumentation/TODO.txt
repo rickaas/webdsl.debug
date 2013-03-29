@@ -1,0 +1,126 @@
+De pretty printer is niet mooi en invalide
+
+check testset in webdsl-try-finally/test/stratego/pp
+en test/prettyprinting/basic-pp.spt
+
+
+
+
+====
+   ValidationContext.1:iter-star                          -- _1,
+   ValidationContext                                      -- KW["validationContext"] KW["{"] _1 KW["}"],
+   ValidationContext.1:iter-star                          -- _1,
+   Catch                                                  -- KW["catch"] KW["("] _1 KW[":"] _2 KW[")"] _3,
+   TryTemplate.2:iter                                     -- _1,
+   TryTemplate                                            -- KW["try"] _1 _2,
+   TryTemplate.2:iter                                     -- _1,
+   TryStatement.2:iter                                    -- _1,
+   TryStatement                                           -- KW["try"] _1 _2,
+   TryStatement.2:iter                                    -- _1,
+   
+   TryFinallyStatement.2:iter                             -- _1,
+   TryFinallyStatement                                    -- KW["try"] _1 _2 _3,
+   TryFinallyStatement.2:iter                             -- _1,
+   Finally                                                -- KW["finally"] _1,
+   
+   ThrowTemplate.1:iter-sep                               -- _1 KW[","],
+   ThrowTemplate                                          -- V  [H  [KW["throw"]] _1],
+   ThrowTemplate.1:iter-sep                               -- _1 KW[","],
+   ThrowStatement.1:iter-sep                              -- _1 KW[","],
+   ThrowStatement                                         -- KW["throw"] _1 KW[";"],
+   ThrowStatement.1:iter-sep                              -- _1 KW[","],
+
+====
+
+Strings worden niet goed ge-pretty-print:
+
+regel:    Text                               -- H hs=0[KW["\""] _1 KW["\""]],
+
+
+
+
+voobeeld:
+
+AST:
+ModuleDefs("make-users",[Define([Page],"makeTestSet",[],None,[TemplateCallBody("form",TemplateBody([Text("\"Make a test set\""),SubmitElem(InlineAction(Block([Stat(ThisCall("generateUsers",[]))])),[],[Text("\"Execute\"")])]))]),Function("generateUsers",[],SimpleSort("Void"),Block([ForCountStmt("count",Int("1"),Int("20"),Block([ForCountStmt("id",Int("0"),Int("100"),Block([VarDeclInitInferred("u",ObjectCreation(SimpleSort("User"),[ObjectPropertyAssignment("username",Add(String("\"MyName\""),Var("id"))),ObjectPropertyAssignment("city",Add(String("\"Fake\""),Var("id"))),ObjectPropertyAssignment("dob",Add(String("\"Unkown\""),Var("id")))])),Stat(Call(Var("u"),"save",[]))]))]))])),Define([Page],"automaticallyMakeTestSet",[],None,[TemplateCallNoBody("templateGenerateTestSet",[])]),Define([],"templateGenerateTestSet",[],None,[VarDeclInitInferred("s",ThisCall("generateTestSet",[]))]),Function("generateTestSet",[],SimpleSort("String"),Block([Stat(ThisCall("generateUsers",[])),Return(String("\"\""))]))],[])
+
+
+STRING:
+module make-users
+define
+page
+makeTestSet
+(
+)
+{
+form {
+  ""Make a test set""
+  submit
+  action
+  {
+    generateUsers();
+  }
+  [
+  ]
+  {
+  ""Execute""
+  }
+}
+}
+function generateUsers ( ) : Void
+{
+  for
+  (
+  count
+  :
+  Int
+  from
+  1
+  to
+  20
+  )
+  {
+    for
+    (
+    id
+    :
+    Int
+    from
+    0
+    to
+    100
+    )
+    {
+      var
+      u
+      :=
+      User{username := "MyName" + id city := "Fake" + id dob := "Unkown" + id}
+      ;
+      u.save();
+    }
+  }
+}
+define
+page
+automaticallyMakeTestSet
+(
+)
+{
+templateGenerateTestSet()
+}
+define
+templateGenerateTestSet
+(
+)
+{
+var
+s
+:=
+generateTestSet()
+;
+}
+function generateTestSet ( ) : String
+{
+  generateUsers();
+  return "";
+}

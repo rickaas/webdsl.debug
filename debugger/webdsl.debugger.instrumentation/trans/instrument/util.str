@@ -1,0 +1,64 @@
+module instrument/util
+
+// some default imports
+imports
+  libstratego-lib
+  libstratego-sglr
+  libstratego-gpp
+  libstrc // for pp-stratego-string
+
+// sel imports
+imports
+  lib/libdsldi
+
+strategies
+    
+    get-a-b-c-d =
+        //debug(!"ABCD");
+          // origin-location  = prim("SSL_EXT_origin_location", <id>)
+          // origin-location // from lib/libdsldi.rtree
+          // try to use the primitive
+          prim("SSL_EXT_origin_location", <id>)//; debug(!"PRIM"))
+          < id // success
+          + fail ; log-critical(|"Could not extract origin information ")// fail
+          
+        // try to parse the location info
+        //; debug(!"END 1")
+        ; ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
+        //; debug(!"END 2")
+
+// imports
+// 	lib/pp-webdsl
+// 	lib/pp-hql
+	
+imports
+	lib/libwebdsl-front
+	
+imports
+	include/WebDSL-parenthesize
+	
+strategies
+	
+	// pp-stratego-string is in strategoxt.jar in package: /org/strategoxt/strc/pp_stratego_string_0_0
+        // write-webdsl-as-dsl = ?(output-filename, dsl-ast)
+        // ; result := <pp-webdsl-to-string> dsl-ast 
+        // ; write-to-file(|output-filename, result)
+        write-webdsl-as-dsl = unsafe-write-webdsl-as-dsl-wrapper
+        
+        unsafe-write-webdsl-as-dsl = ?(output-filename, dsl-ast)
+        ; result := <parenthesize-WebDSL; pp-webdsl-to-string> dsl-ast
+        //; result := <pp-webdsl-to-string> dsl-ast 
+        ; write-to-file(|output-filename, result)
+
+        unsafe-write-webdsl-as-dsl-wrapper = ?(output-filename, dsl-ast)
+        ; (
+          	(id; unsafe-write-webdsl-as-dsl ) 
+          	<+ (!output-filename; log-critical(|"Failed to write ATerm to:"); fail)
+          )
+        
+		parse-webdsl-as-dsl = ?filename
+			; log-vomit(|"Parsing... ")
+			; get-current-working-directory
+			; log-vomit(|"In: ")
+			; <parse-webdsl-string-pt> filename
+			; log-vomit(|"Parse result: ")

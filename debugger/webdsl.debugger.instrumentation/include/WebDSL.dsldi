@@ -1,0 +1,15 @@
+instrumentation
+
+// TemplateElement-sort is a ui-element in a template
+event step at TemplateElement._ creates gen-element-step from extract-element-info
+
+// TemplateDefinition-sort is used for templates and pages
+event enter at TemplateDefinition._ creates gen-template-enter from extract-template-info
+event exit at TemplateDefinition._ creates gen-template-exit from extract-template-info
+
+// Statement-sort 
+event step at Statement._ creates gen-step from extract-statement-info
+// Function
+event enter at Function._ creates gen-function-enter from extract-function-info
+event exit at Function._ creates gen-function-exit from extract-function-info
+

@@ -1,0 +1,32 @@
+Application(
+  "globalfunctions"
+, [ Section(
+      "definitions"
+    , [ Function(
+          "resetSchedule"
+        , []
+        , SimpleSort("Void")
+        , Block(
+            [ VarDeclGeneric("hourCounter"{"resetSchedule_hourCounter0"}, None(), Int("0"))
+            , VarDeclGeneric("intervalInHours"{"resetSchedule_intervalInHours0"}, None(), Int("12"))
+            , VarDeclGeneric("count"{"resetSchedule_count0"}, None(), Add(Var("hourCounter"{"resetSchedule_hourCounter0"}), Var("intervalInHours"{"resetSchedule_intervalInHours0"})))
+            , Stat(ThisCall("statementStep"{"resetSchedule_statementStep0"}, [String("webdsl_scripts/testcases/fragments/functions/global/globalfunctions.app"), String("7,5,7,33")]))
+            , Stat(ThisCall("validateEmail"{"resetSchedule_validateEmail0"}, [String("foo@bar.com")]))
+            ]
+          )
+        )
+      , Function(
+          "validateEmail"
+        , [Arg("mail"{"validateEmail_mail0"}, SimpleSort("String"))]
+        , SimpleSort("Bool")
+        , Block(
+            [ Stat(ThisCall("statementStep"{"validateEmail_statementStep0"}, [String("webdsl_scripts/testcases/fragments/functions/global/globalfunctions.app"), String("11,5,11,17")]))
+            , Return(False())
+            ]
+          )
+        )
+      , Define([Page()], "root", [], None(), [])
+      ]
+    )
+  ]
+)

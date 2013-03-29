@@ -1,0 +1,10 @@
+4001: zonder events, met frame tracing, met event-duration tracing
+4002: met events, met frame tracing, met event-duration tracing
+4003: met events, met frame tracing, zonder event-duration tracing
+4004: met events, met frame tracing, zonder event-duration tracing (no SYSOUTs)
+
+5000: zonder events, met frame tracing, zonder event duration
+
+6000: zonder events, met frame tracing, zonder event duration, op MySQL
+6001: met events, met frame tracing, zonder event duration, op MySQL
+

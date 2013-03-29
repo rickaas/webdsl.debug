@@ -1,0 +1,10 @@
+module instrument/statement-placeholder
+
+
+signature 
+	constructors
+      // the first statement contains the debug-event call, the second one the original statement
+      DebugStep            : Statement * Statement -> Statement
+      
+      // the Block contains the body of the function, the Statement contains the exit-event
+      DebugTryFinally : Block * Statement -> Statement
