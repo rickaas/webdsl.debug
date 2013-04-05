@@ -62,7 +62,7 @@
 	<!-- Compile stratego code to java helper target-->
     <target name="stratego.jvm.helper">
     	<mkdir dir="${basedir}/${java-src.gen.dir}/${package-root-dir}"/>
-        <java classname="org.strategoxt.strj.Main" failonerror="true">
+        <java classname="org.strategoxt.strj.Main" failonerror="true" fork="true">
         	<classpath refid="strategoxt.jar.libraryclasspath" />
             <arg value="-i"/>
             <arg value="${basedir}/${str-src.dir}/${strmodule-name}.str"/>
@@ -140,8 +140,9 @@
 	</target>
 	
 	<target name="update-dsldi">
+		<copy file="${dsldi.home}/dist/libdsldi.rtree" todir="lib" preservelastmodified="true" overwrite="true" />
 		<copy todir="utils" preservelastmodified="true">
-			<fileset dir="${dsldi.home}/dist" />
+			<fileset dir="${dsldi.home}/dist" includes="*.jar" />
 		</copy>
 	</target>
 	
