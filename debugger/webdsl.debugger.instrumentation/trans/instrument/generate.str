@@ -13,7 +13,7 @@ imports
 strategies
 	webdsl-post-instrumentation =
 		innermost(replace-debug-aterms)
-		; (add-debug-import <+ (<log-critical(|"Could not add debug import ")> ""; fail))
+		; (add-debug-import <+ (<err(|"Could not add debug import ")> ""; fail))
 
 // DebugEventCall are not generated, we directly generate WebDSL code
 //    replace-debug-aterms :

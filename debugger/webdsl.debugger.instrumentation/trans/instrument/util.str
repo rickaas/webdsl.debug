@@ -14,18 +14,10 @@ imports
 strategies
     
     get-a-b-c-d =
-        //debug(!"ABCD");
-          // origin-location  = prim("SSL_EXT_origin_location", <id>)
-          // origin-location // from lib/libdsldi.rtree
-          // try to use the primitive
-          prim("SSL_EXT_origin_location", <id>)//; debug(!"PRIM"))
+        (prim("SSL_EXT_origin_location", <id>)//; debug(!"PRIM"))
           < id // success
-          + fail ; log-critical(|"Could not extract origin information ")// fail
-          
-        // try to parse the location info
-        //; debug(!"END 1")
-        ; ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
-        //; debug(!"END 2")
+          + (err(|"Could not extract origin information "); fail)// fail
+        ); ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
 
 // imports
 // 	lib/pp-webdsl
@@ -53,7 +45,7 @@ strategies
         unsafe-write-webdsl-as-dsl-wrapper = ?(output-filename, dsl-ast)
         ; (
           	(id; unsafe-write-webdsl-as-dsl ) 
-          	<+ (!output-filename; log-critical(|"Failed to write ATerm to:"); fail)
+          	<+ (!output-filename; err(|"Failed to write ATerm to:"); fail)
           )
         
 		parse-webdsl-as-dsl = ?filename

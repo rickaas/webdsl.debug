@@ -22,7 +22,7 @@ strategies
 	gen-template-enter :
 		template-def -> instrumented-template-def
 		where
-			(debug-information := <GET-CURRENT-DEBUG-INFORMATION> <+ log-critical(|"Failed to get debug information"))
+			(debug-information := <GET-CURRENT-DEBUG-INFORMATION> <+ err(|"Failed to get debug information"))
 			; ?(filename, a, b, c, d, t-name)
 			; program-filename := $[[filename]]
 			; location := $[[a],[b],[c],[d]]

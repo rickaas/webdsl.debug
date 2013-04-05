@@ -18,8 +18,8 @@ imports
 strategies
 	
 	init-config =
-		<log-info(|"Initializing WebDSL debug instrumentation...")> ""
-		
+		<log-info-msg(|"Initializing WebDSL debug instrumentation...")> ""
+
 		// extract-step-info
 		; ext-register-extract-strategy(extract-step-info|"extract-step-info")
 		// extract-function-info
@@ -44,11 +44,24 @@ strategies
 		
         ; <SET-LANGUAGE-ID> "Webdsl"
         ; <SET-POST-INSTRUMENTATION-NAME> "webdsl-post-instrumentation"
-        ; <add-dsl-specific-write-file> ("Webdsl", "write-webdsl-as-dsl")
-        ; <add-dsl-specific-parse-file> ("Webdsl", "parse-webdsl-file")
-        //; <add-dsl-specific-parse-file> ("Webdsl", "parse-webdsl-as-dsl")
-        ; <log-info(|"Initializing WebDSL debug instrumentation complete")> ""
+        ; ext-register-post-instrumentation-strategy(webdsl-post-instrumentation|"webdsl-post-instrumentation")
           
+        ; <add-dsl-specific-write-file> ("Webdsl", "write-webdsl-as-dsl")
+        ; ext-register-write-strategy(write-webdsl-as-dsl|"write-webdsl-as-dsl")
+          
+        ; <add-dsl-specific-parse-file> ("Webdsl", "parse-webdsl-as-dsl")
+        ; ext-register-parse-strategy(parse-webdsl-as-dsl|"parse-webdsl-as-dsl")
+          
+        ; init-dsldi
+        ; <set-config> ("--file-extension", "app")
+
+        ; <log-info-msg(|"Initializing WebDSL debug instrumentation complete")> ""
+
+    init-dsldi =
+    	import-term(lib/WebDSL.dsldi.aterm) // can only read aterms, plain-text is not supported
+    	; ?SEL(_)
+    	; SET-SEL-DEFINITION
+
 	override filter-dirs = 
 		?paths*
 		//; log-vomit(|"Override filter-dirs ")
