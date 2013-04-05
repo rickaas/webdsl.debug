@@ -1,0 +1,7 @@
+/.cache
+/utils
+*.jar
+/build
+*.rtree
+.cache
+bin
