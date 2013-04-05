@@ -5,19 +5,22 @@ imports
   libstratego-lib
   libstratego-sglr
   libstratego-gpp
-  libstrc // for pp-stratego-string
 
 // sel imports
-imports
-  lib/libdsldi
-
+//imports
+//  lib/libdsldi
+imports include/libdsldi
 strategies
     
     get-a-b-c-d =
-        (prim("SSL_EXT_origin_location", <id>)//; debug(!"PRIM"))
-          < id // success
-          + (err(|"Could not extract origin information "); fail)// fail
-        ); ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
+         ?term
+         //; stratego-term-location
+         ; get-term-origin-location-tuple // from libdsldi
+         // RL; the location info seems to be 0-based
+         ; ?tuple
+         ; make-one-based-linenumbers-location // convert to 1-based line numbers
+         // RL: but the toplevel term has a wrong line number, I don't know if that's a in the parser bug or not...
+
 
 // imports
 // 	lib/pp-webdsl
@@ -48,9 +51,17 @@ strategies
           	<+ (!output-filename; err(|"Failed to write ATerm to:"); fail)
           )
         
+          parse-webdsl-file =
+		    parse-file(
+		      strsglr-perror, strsglr-report-parse-error
+		    | <import-term(include/WebDSL.tbl)> // the parse table should support try-finally statements
+		    )
+    
 		parse-webdsl-as-dsl = ?filename
 			; log-vomit(|"Parsing... ")
 			; get-current-working-directory
 			; log-vomit(|"In: ")
-			; <parse-webdsl-string-pt> filename
+			//; <parse-webdsl-string-pt> filename // it tries to parse the contents of the current term
+			//; <xtc-parse-webdsl> FILE("filename")
+			; <parse-webdsl-file> filename
 			; log-vomit(|"Parse result: ")

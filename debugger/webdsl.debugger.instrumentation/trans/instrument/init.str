@@ -10,7 +10,7 @@ imports
 	lib/libwebdsl-front
 
 imports
-	lib/libdsldi
+	include/libdsldi
 	
 imports
 	instrument/-
