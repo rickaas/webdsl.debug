@@ -10,12 +10,12 @@
 
 	<property name="jar.name" value="webdsl.debugger.runtime.profiler" />
 	
-	<property name="debug.interfaces.java.project.location" value="../org.spoofax.debug.interfaces.java" />
-    <property name="debug.interfaces.project.location" value="../org.spoofax.debug.interfaces" />
+	<!-- WebDSL tryfinally compiler -->
+	<loadproperties srcFile="config.properties" />
 	
     <path id="my_classpath">
-        <fileset dir="${debug.interfaces.java.project.location}/build/jar" includes="**/*.jar"/>
-    	<fileset dir="${debug.interfaces.project.location}/build/jar" includes="**/*.jar"/>
+        <fileset dir="${spoofax.debug.interfaces.java.home}/build/jar" includes="**/*.jar"/>
+    	<fileset dir="${spoofax.debug.interfaces.home}/build/jar" includes="**/*.jar"/>
     	<fileset file="lib/webdsl-support.jar" />
     	<fileset file="lib/servlet-api.jar" />
     </path>
@@ -45,14 +45,21 @@
 		<move file="${jar.dir}/${jar.name}-source.tmp.jar" tofile="${jar.dir}/${jar.name}-source.jar" />
 	</target>
 
-	<target name="release" depends="clean, jar, jar-source" />
+	<target name="release" depends="clean, update-webdsl-jars, jar, jar-source" />
 
     <target name="build-debug.interfaces.java">
-        <ant antfile="${debug.interfaces.java.project.location}/build.main.xml" 
+        <ant antfile="${spoofax.debug.interfaces.java.home}/build.main.xml" 
         	target="release" 
-        	dir="${debug.interfaces.java.project.location}"
+        	dir="${spoofax.debug.interfaces.java.home}"
         	inheritall="false"
         />
     </target>
 
+	<target name="update-webdsl-jars">
+		<!-- copy webdsl-support.jar -->
+		<copy file="${webdsl.home}//webdsl/template-java-servlet/lib/webdsl-support.jar"
+			preservelastmodified="true" todir="lib" />
+			<copy file="${webdsl.home}//webdsl/template-java-servlet/lib/servlet-api.jar"
+				preservelastmodified="true" todir="lib" />
+	</target>
 </project>
