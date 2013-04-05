@@ -1,0 +1,95 @@
+SEL(
+  InstrBlock(
+    [ Link(
+        Step()
+      , SortAndConstructor(Sort("TemplateElement"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("TemplateCall"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("TemplateCallNoArgs"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("TemplateCallNoBody"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("TemplateCallNoAssigns"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("TemplateCallPropsNoBody"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("TemplateCallProps"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("TemplateCallPropsNoArgs"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("TemplateCallBody"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("VarDecl"), Empty())
+      , StrategyRef("gen-template-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Exit()
+      , SortAndConstructor(Sort("TemplateDefinition"), Empty())
+      , StrategyRef("gen-template-exit")
+      , StrategyRef("extract-template-info")
+      )
+    , Link(
+        Enter()
+      , SortAndConstructor(Sort("TemplateDefinition"), Empty())
+      , StrategyRef("gen-template-enter")
+      , StrategyRef("extract-template-info")
+      )
+    , Link(
+        Step()
+      , SortAndConstructor(Sort("Statement"), Empty())
+      , StrategyRef("gen-function-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Exit()
+      , SortAndConstructor(Sort("Function"), Empty())
+      , StrategyRef("gen-function-exit")
+      , StrategyRef("extract-function-info")
+      )
+    , Link(
+        Enter()
+      , SortAndConstructor(Sort("Function"), Empty())
+      , StrategyRef("gen-function-enter")
+      , StrategyRef("extract-function-info")
+      )
+    ]
+  )
+)
