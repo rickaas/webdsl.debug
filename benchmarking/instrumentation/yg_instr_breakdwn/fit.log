@@ -1,0 +1,540 @@
+
+
+*******************************************************************************
+Fri Jun  7 12:32:48 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.7611
+rel. change during last iteration : -6.51118e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.475579
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.226175
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000258526      +/- 0.0001447    (55.97%)
+b               = 0.0631628        +/- 0.1012       (160.2%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 12:40:34 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.7367
+rel. change during last iteration : -6.45513e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.475084
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.225705
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000253664      +/- 0.0001446    (56.99%)
+b               = 0.0675846        +/- 0.1011       (149.5%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 12:41:06 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.7806
+rel. change during last iteration : -6.52754e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.475973
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.226551
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000261008      +/- 0.0001448    (55.49%)
+b               = 0.0609055        +/- 0.1012       (166.2%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 12:41:44 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.7386
+rel. change during last iteration : -6.47371e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.475124
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.225743
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000254252      +/- 0.0001446    (56.86%)
+b               = 0.0670504        +/- 0.1011       (150.7%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 12:42:40 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.7371
+rel. change during last iteration : -6.45486e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.475094
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.225714
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000253816      +/- 0.0001446    (56.95%)
+b               = 0.0674465        +/- 0.1011       (149.8%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 12:42:57 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.7423
+rel. change during last iteration : -6.47928e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.475198
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.225813
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000255165      +/- 0.0001446    (56.67%)
+b               = 0.06622          +/- 0.1011       (152.6%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 13:31:13 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 14.032
+rel. change during last iteration : -6.19802e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.519467
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.269846
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000326813      +/- 0.0001581    (48.36%)
+b               = 0.00105157       +/- 0.1105       (1.051e+04%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 13:31:28 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.7413
+rel. change during last iteration : -6.47374e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.475179
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.225795
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000254946      +/- 0.0001446    (56.71%)
+b               = 0.066419         +/- 0.1011       (152.2%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 13:32:56 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.7381
+rel. change during last iteration : -6.46038e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.475114
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.225733
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000254103      +/- 0.0001446    (56.89%)
+b               = 0.0671857        +/- 0.1011       (150.4%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 13:48:36 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.7365
+rel. change during last iteration : -6.45977e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.47508
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.225701
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000253602      +/- 0.0001446    (57%)
+b               = 0.0676417        +/- 0.1011       (149.4%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 13:50:37 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 15.6567
+rel. change during last iteration : -5.79649e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.548718
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.301091
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000350455      +/- 0.000167     (47.64%)
+b               = -0.0204516       +/- 0.1167       (570.7%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
+
+
+*******************************************************************************
+Fri Jun  7 13:53:12 2013
+
+
+FIT:    data read from "/home/rlindeman/Documents/TU/strategoxt/git-stuff/dsldi/webdsl.debug/benchmarking/yg_instr_breakdwn/original.foo_1.file.stats" using 5:9
+        #datapoints = 54
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.64298e+07       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 494.311
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 11.737
+rel. change during last iteration : -6.46253e-13
+
+degrees of freedom    (FIT_NDF)                        : 52
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.47509
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.225711
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 0.000253756      +/- 0.0001446    (56.97%)
+b               = 0.0675017        +/- 0.1011       (149.7%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.769  1.000 
